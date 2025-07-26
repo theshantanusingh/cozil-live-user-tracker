@@ -1,10 +1,10 @@
 "use strict";
 
-require('dotenv').config();
+require('dotenv').config({ path: __dirname + '/../.env' });
 const logger = require('./../utils/logger.utility');
 
 logger.info(
-    `{module: env.config.js}`
+    `{module: env.config.js} ENTRY`
 )
 
 const all_env = [
@@ -37,6 +37,9 @@ logger.info(
     `{module: env.config.js} ${JSON.stringify(config)}`
 )
 
-module.exports = config;
+logger.info(
+    `{module: env.config.js} EXIT`
+)
 
+module.exports = config;
 // all tests pass.
