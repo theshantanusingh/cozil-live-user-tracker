@@ -41,14 +41,16 @@ io.on('connection', socket => {
     socket.on('user-landed', () => {
         logger.info(`{module: server.js} [io.on connection] [new-user] ${socket.id} joined`);
         online_users.add(socket.id);
-    })
+
+        io.emit('online-user-count', online_users.size);
+    });
 
     socket.on('disconnect', () => {
         logger.info(`{module: server.js} [io.on connection] ${socket.id} disconnected`);
         online_users.delete(socket.id);
     });
 
-})
+});
 
 app.get('/', function(req, res) {
     logger.info(`{module: server.js} [app.get /] ENTRY`);
@@ -60,7 +62,7 @@ app.get('/online-user', function(req, res){
     logger.info(`{module: server.js} [app.get /online-user] ENTRY`);
     res.send(`There are ${online_users.size} users online.`);
     logger.info(`{module: server.js} [app.get /online-user] EXIT`);
-})
+});
 
 server.listen(PORT, function(){
     logger.info('✅ THIS SERVICE IS FOR REAL-TIME TRACKING OF NUMBER OF USERS. Listening on port ' + PORT);
