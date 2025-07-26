@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "morgan": "^1.10.1",
     "node-fetch": "^3.3.2",
@@ -10,7 +12,6 @@
   "version": "1.0.0",
   "description": "This service focuces on monitiring the total live users at cozil application. This monitoring is real time.",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "start": "npm start"
   },
