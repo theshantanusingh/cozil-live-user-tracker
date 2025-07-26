@@ -24,7 +24,31 @@ This is a standalone **WebSocket-based microservice** designed to track online u
 
 ---
 
-## 📦 Installation
-Not connected to github now will update as soon as possible
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/theshantanusingh/cozil-live-user-tracker
+cd cozil-live-user-tracker
+```
+
+### 2. Install Dependencies
+
+Ensure Node.js and npm are installed, then run:
+
 ```bash
 npm install
+```
+
+### 3. Build Tailwind CSS
+
+```bash
+npm run build
+```
+
+This will generate the CSS at `./src/output.css`.
+
+### 4. Start the Server
+
+```bash
+npm start
+```
