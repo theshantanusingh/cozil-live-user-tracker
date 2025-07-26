@@ -5,5 +5,20 @@
     "node-fetch": "^3.3.2",
     "pino": "^9.7.0",
     "pino-pretty": "^13.0.0"
-  }
+  },
+  "name": "cozil-live-user-tracker",
+  "version": "1.0.0",
+  "description": "This service focuces on monitiring the total live users at cozil application. This monitoring is real time.",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "npm start"
+  },
+  "keywords": [
+    "live",
+    "users",
+    "monitoring"
+  ],
+  "author": "Shantanu Singh",
+  "license": "ISC"
 }
