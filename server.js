@@ -32,22 +32,39 @@ app.use(morgan('combined'));
 
 logger.info(`{module: server.js} inited all variables. Now working on main logic.`);
 
-const online_users = new Set();
+const online_users = new Map();
 
 io.on('connection', socket => {
 
     logger.info(`{module: server.js} [io.on connection] ${socket.id} connected`);
 
-    socket.on('user-landed', () => {
-        logger.info(`{module: server.js} [io.on connection] [new-user] ${socket.id} joined`);
-        online_users.add(socket.id);
+    socket.on('user-landed', (userid) => {
+        logger.info(`{module: server.js} [io.on connection] [new-user] ${userid} landed on id - ${socket.id}`);
+        
+        if(!online_users.has(userid)){
+            online_users.set(userid, {
+                available: true,
+                socketIds: new Set()
+            });
+        };
+
+        online_users.get(userid).socketIds.add(socket.id);
 
         io.emit('online-user-count', online_users.size);
     });
 
     socket.on('disconnect', () => {
         logger.info(`{module: server.js} [io.on connection] ${socket.id} disconnected`);
-        online_users.delete(socket.id);
+        
+        for( const [userid, data] of online_users.entries()){
+            data.socketIds.delete(socket.id);
+
+            if(data.socketIds.size === 0){
+                online_users.delete(userid);
+            };
+        };
+
+        io.emit('online-user-count', online_users.size);
     });
 
 });
