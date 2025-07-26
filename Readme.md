@@ -1,6 +1,6 @@
 # 👥 Live User Tracking Service
 
-This is a standalone **WebSocket-based microservice** designed to track online users in real time across your web platform — ideal for features like **"X users online"** or **live presence indicators** (e.g., Omegle-style platforms).
+This is a standalone **WebSocket-based microservice** designed to track online users in real time across your web platform — ideal for features like **"X users online"** or **live presence indicators** (e.g., Omegle-style platforms). This is being used in COZIL, one of application I have createad.
 
 ---
 
@@ -20,7 +20,7 @@ This is a standalone **WebSocket-based microservice** designed to track online u
 - **Socket.IO** for WebSocket communication
 - **UUID** for generating user IDs
 - **CORS** and **Helmet** for security
-- **Winston** (or any logger) for logging
+- **Pino** for logging
 
 ---
 

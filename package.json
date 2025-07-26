@@ -24,5 +24,14 @@
     "monitoring"
   ],
   "author": "Shantanu Singh",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theshantanusingh/cozil-live-user-tracker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/theshantanusingh/cozil-live-user-tracker/issues"
+  },
+  "homepage": "https://github.com/theshantanusingh/cozil-live-user-tracker#readme"
 }
