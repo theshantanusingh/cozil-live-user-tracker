@@ -1,6 +1,11 @@
 "use strict";
 
-require('dotenv').config({ path: './../.env' });
+require('dotenv').config();
+const logger = require('./../utils/logger.utility');
+
+logger.info(
+    `{module: env.config.js}`
+)
 
 const all_env = [
     'PORT',
@@ -10,11 +15,15 @@ const all_env = [
 ];
 
 (function ensureVars(vars){
+    logger.info(`{module: env.config.js} [ensureVars] entry.`);
+    logger.info(`Checking env variables: ${vars}`);
     vars.forEach(particularEnvVar => {
         if(!process.env[particularEnvVar]){
             throw new Error(`Missing env variable ' ${particularEnvVar} '`);
         }
     });
+
+    logger.info(`{module: env.config.js} [ensureVars] exiting.`);
 })(all_env);
 
 const config = {
@@ -23,6 +32,10 @@ const config = {
     incomingurl: process.env.INCOMING_URL,
     env: process.env.ENV
 };
+
+logger.info(
+    `{module: env.config.js} ${JSON.stringify(config)}`
+)
 
 module.exports = config;
 
