@@ -39,9 +39,8 @@ io.on('connection', socket => {
     logger.info(`{module: server.js} [io.on connection] ${socket.id} connected`);
 
     socket.on('user-landed', (userid) => {
-        logger.info(`{module: server.js} [io.on connection] [new-user] ${userid} landed on id - ${socket.id}`);
-        
-        if(!online_users.has(userid)){
+
+        if (!online_users.has(userid)) {
             online_users.set(userid, {
                 available: true,
                 socketIds: new Set()
@@ -51,15 +50,31 @@ io.on('connection', socket => {
         online_users.get(userid).socketIds.add(socket.id);
 
         io.emit('online-user-count', online_users.size);
+
+        if (online_users.get(userid) === undefined) {
+            logger.info(`{module: server.js} [io.on connection] [new-user] ${userid} landed on id - ${socket.id}, Complete details: ${JSON.stringify({
+                userid: userid,
+                isAvailable: true,
+                socketIds: [socket.id]
+            })}`);
+        } else {
+            const existingUser = online_users.get(userid);
+            logger.info(`{module: server.js} [io.on connection] [existing-user] ${userid} landed on id - ${socket.id}, Complete details: ${JSON.stringify({
+                userid: userid,
+                isAvailable: existingUser.isAvailable,
+                socketIds: Array.from(existingUser.socketIds)
+            })}`);
+        }
+
     });
 
     socket.on('disconnect', () => {
         logger.info(`{module: server.js} [io.on connection] ${socket.id} disconnected`);
-        
-        for( const [userid, data] of online_users.entries()){
+
+        for (const [userid, data] of online_users.entries()) {
             data.socketIds.delete(socket.id);
 
-            if(data.socketIds.size === 0){
+            if (data.socketIds.size === 0) {
                 online_users.delete(userid);
             };
         };
@@ -69,18 +84,12 @@ io.on('connection', socket => {
 
 });
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     logger.info(`{module: server.js} [app.get /] ENTRY`);
-    res.send('Hello World!');
+    res.send(`There are ${online_users.size} users online.`);
     logger.info(`{module: server.js} [app.get /] EXIT`);
 });
 
-app.get('/online-user', function(req, res){
-    logger.info(`{module: server.js} [app.get /online-user] ENTRY`);
-    res.send(`There are ${online_users.size} users online.`);
-    logger.info(`{module: server.js} [app.get /online-user] EXIT`);
-});
-
-server.listen(PORT, function(){
+server.listen(PORT, function () {
     logger.info('✅ THIS SERVICE IS FOR REAL-TIME TRACKING OF NUMBER OF USERS. Listening on port ' + PORT);
 });
